@@ -62,6 +62,6 @@ npm install -g generator-jhipster@0.11.0
 
 echo ">> Install Compass"
 curl -L get.rvm.io | bash -s stable
-sudo bash -c "source /etc/profile.d/rvm.sh && rvm requirements; rvm install 1.9.1; gem install compass sass"
+sudo bash -c "source /etc/profile.d/rvm.sh && rvm requirements; rvm install 2.1.1; gem install compass sass"
 
 sudo apt-get clean
