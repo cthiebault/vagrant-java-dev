@@ -2,6 +2,12 @@
 
 VAGRANT_DATA=/vagrant_data
 
+source $VAGRANT_DATA/settings
+
+sudo apt-get update
+
+# need to be in first as it installs add-apt-repository command
+sudo apt-get install -y python-software-properties
 
 if [ $(grep -c '^deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' /etc/apt/sources.list) -eq 0 ];
 then
@@ -9,11 +15,6 @@ then
 	sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
 	echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list
 fi
-
-sudo apt-get update
-
-# need to be in first as it installs add-apt-repository command
-sudo apt-get install -y python-software-properties
 
 echo ">> Add Maven3 PPA"
 sudo add-apt-repository -y ppa:natecarlson/maven3
@@ -29,8 +30,8 @@ sudo apt-get install mongodb-10gen
 if [ ! -d /etc/mysql ];
 then
   echo ">> Install MySQL"
-	sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password 1234'
-	sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password 1234'
+  echo mysql-server mysql-server/root_password select $MYSQL_ROOT_PWD | debconf-set-selections
+  echo mysql-server mysql-server/root_password_again select $MYSQL_ROOT_PWD | debconf-set-selections
 	sudo apt-get -y install mysql-server
 fi
 
