@@ -16,6 +16,9 @@ then
 	echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list
 fi
 
+echo ">> Add Oracle Java PPA"
+sudo add-apt-repository -y ppa:webupd8team/java
+
 echo ">> Add Maven3 PPA"
 sudo add-apt-repository -y ppa:natecarlson/maven3
 
@@ -35,12 +38,14 @@ then
 	sudo apt-get -y install mysql-server
 fi
 
-echo ">> Install Java 7"
-sudo apt-get -y install java7-runtime
-sudo update-alternatives --set java /usr/lib/jvm/java-7-openjdk-i386/jre/bin/java
+echo ">> Install Oracle Java 7"
+echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections
+sudo apt-get install -y oracle-java7-installer
+sudo update-java-alternatives -s java-7-oracle
+echo "export JAVA_HOME=/usr/lib/jvm/java-7-oracle" >> ~/.bashrc
 
 echo ">> Install utilities"
-sudo apt-get -y install -y openssh-server vim git sudo zip bzip2 fontconfig curl make
+sudo apt-get -y install -y openssh-server vim git zip bzip2 fontconfig curl make
 
 echo ">> Install Maven3"
 sudo apt-get install -y maven3
@@ -59,4 +64,4 @@ echo ">> Install Compass"
 curl -L get.rvm.io | bash -s stable
 sudo bash -c "source /etc/profile.d/rvm.sh && rvm requirements; rvm install 1.9.1; gem install compass sass"
 
-#/usr/sbin/sshd -D
+sudo apt-get clean
