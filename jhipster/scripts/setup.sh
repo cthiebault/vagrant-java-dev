@@ -38,11 +38,11 @@ then
 	sudo apt-get -y install mysql-server
 fi
 
-echo ">> Install Oracle Java 7"
-echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections
-sudo apt-get install -y oracle-java7-installer
-sudo update-java-alternatives -s java-7-oracle
-echo "export JAVA_HOME=/usr/lib/jvm/java-7-oracle" >> ~/.bashrc
+echo ">> Install Oracle Java 8"
+echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections
+sudo apt-get install -y oracle-java8-installer
+sudo update-java-alternatives -s java-8-oracle
+echo "export JAVA_HOME=/usr/lib/jvm/java-8-oracle" >> ~/.bashrc
 
 echo ">> Install utilities"
 sudo apt-get -y install -y openssh-server vim git zip bzip2 fontconfig curl make
